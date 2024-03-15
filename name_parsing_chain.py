@@ -38,7 +38,7 @@ def create_chat_prompt_template_with_few_shot(system_template: str, examples: li
         ]
     )
 
-def get_parse_name_chain(system_template: str, examples: list[dict[str, str]], human_template: str) -> RunnableSerializable:
+def get_name_parsing_chain(system_template: str, examples: list[dict[str, str]], human_template: str) -> RunnableSerializable:
     return (
         {
             "user_list": itemgetter("user_list")
