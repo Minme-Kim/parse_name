@@ -28,8 +28,8 @@ def create_chat_prompt_template_with_few_shot(system_template: str, examples: li
             FewShotChatMessagePromptTemplate(
                 example_prompt=ChatPromptTemplate.from_messages(
                     [
-                        ("human", "{input}"),
-                        ("ai", "{output}")
+                        ("human", "사용자 리스트: {user_list}"),
+                        ("ai", "수정된 리스트: {modified_list}")
                     ]
                 ),
                 examples=examples
