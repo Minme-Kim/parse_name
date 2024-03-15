@@ -3,8 +3,8 @@ from operator import itemgetter
 from langchain_core.runnables import RunnableWithFallbacks, RunnableSerializable
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_openai import ChatOpenAI
-from langchain_core.prompts.few_shot import FewShotChatMessagePromptTemplate
 from langchain_core.prompts import ChatPromptTemplate
+from langchain_core.prompts.few_shot import FewShotChatMessagePromptTemplate
 from langchain_core.output_parsers import CommaSeparatedListOutputParser
 
 def create_chat_model_with_fallbacks() -> RunnableWithFallbacks:
@@ -21,7 +21,7 @@ def create_chat_model_with_fallbacks() -> RunnableWithFallbacks:
         ]
     )
 
-def create_chat_prompt_template_with_few_shot(system_template: str, examples: list[dict[str, str]]) -> FewShotChatMessagePromptTemplate:
+def create_chat_prompt_template_with_few_shot(system_template: str, examples: list[dict[str, str]], human_template: str) -> ChatPromptTemplate:
     return ChatPromptTemplate.from_messages(
         [
             ("system", system_template),
@@ -34,16 +34,16 @@ def create_chat_prompt_template_with_few_shot(system_template: str, examples: li
                 ),
                 examples=examples
             ),
-            ("human", "{input}\n\nAI: ")
+            ("human", human_template)
         ]
     )
 
-def get_parse_name_chain(system_template: str, examples: list[dict[str, str]]) -> RunnableSerializable:
+def get_parse_name_chain(system_template: str, examples: list[dict[str, str]], human_template: str) -> RunnableSerializable:
     return (
         {
-            "input": itemgetter("input")
+            "user_list": itemgetter("user_list")
         }
-        | create_chat_prompt_template_with_few_shot(system_template, examples)
+        | create_chat_prompt_template_with_few_shot(system_template, examples, human_template)
         | create_chat_model_with_fallbacks()
         | CommaSeparatedListOutputParser()
     )

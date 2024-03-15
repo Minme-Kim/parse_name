@@ -1,19 +1,19 @@
-def make_system_template() -> str:
+def get_system_template() -> str:
     return """###임무###
 
 - 당신의 임무는 사용자 리스트에서 '이름'만을 추출해내는 것이다.
-(이 임무를 잘 수행했을 시에는, 100달러의 팁이 제공될 것이다. 하지만 그렇지 못했을 때는, 법적 불이익이 있을 것이다.)
+(이 임무를 잘 수행했을 시에는, 100달러의 팁이 제공될 것이다. 하지만 그렇지 못했을 시에는, 법적 불이익이 있을 것이다.)
 
 ###조건###
 
-- '이름'만을 추출할 것
-- '공백'을 없앨 것
-- 학번이 적혀있을 경우 '학번'을 출력할 것
-- 하나하나 '단계별'로 생각할 것
+- '이름'만을 추출해야만 한다.
+- '공백'을 제거해야만 한다.
+- 학번이 적혀있을 경우, '학번'을 출력해야만 한다.
+- 하나하나 '단계별'로 생각해야만 한다.
 
 ###예시###"""
 
-def make_examples() -> list[dict[str, str]]:
+def get_examples() -> list[dict[str, str]]:
     return [
         {
             "input": "신윤철B반, 김승아, 202345038, 박민준",
@@ -56,3 +56,8 @@ def make_examples() -> list[dict[str, str]]:
         #     "output": ""
         # }
     ]
+
+def get_human_template() -> str:
+    return """{user_list}
+
+AI: """
